@@ -5,14 +5,17 @@ export default function TextBox(props) {
   const handleUpClick = () => {
     let newText = text.toUpperCase();
     setText(newText);
+    props.showAlert("Converted to uppercase", "success");
   };
   const handleDoClick = () => {
     let newText = text.toLowerCase();
     setText(newText);
+    props.showAlert("Converted to lowercase", "success");
   };
   const handleClearClick = () => {
     let newText = "";
     setText(newText);
+    props.showAlert("Text Cleared", "success");
   };
   const handleSpeakClick = () => {
     let msg = new SpeechSynthesisUtterance(text);
@@ -26,15 +29,18 @@ export default function TextBox(props) {
         window.speechSynthesis.cancel();
       }
     }
+    props.showAlert("Speaking", "success");
   };
   const handleCopyClick = () => {
     var text = document.getElementById("myBox");
     text.select();
     navigator.clipboard.writeText(text.value);
+    props.showAlert("Copied", "success");
   };
   const handleExtraSpaces = () => {
     let newText = text.split(/[ ]+/);
-    setText(newText.join(" "))
+    setText(newText.join(" "));
+    props.showAlert("Removed extra spaces", "success");
   };
   const handleOnChange = (ev) => {
     setText(ev.target.value);
@@ -42,13 +48,20 @@ export default function TextBox(props) {
   const [text, setText] = useState("");
   return (
     <>
-      <div className="container">
+      <div
+        className="container"
+        style={{ color: props.mode === "dark" ? "white" : "black" }}
+      >
         <h1>{props.heading}</h1>
         <div className="mb-3">
           <textarea
             className="form-control"
             value={text}
             onChange={handleOnChange}
+            style={{
+              backgroundColor: props.mode === "dark" ? "grey" : "white",
+              color: props.mode === "dark" ? "white" : "black",
+            }}
             id="myBox"
             rows="8"
           ></textarea>
@@ -76,7 +89,10 @@ export default function TextBox(props) {
           Remove Extra Spaces
         </button>
       </div>
-      <div className="container my-2">
+      <div
+        className="container my-2"
+        style={{ color: props.mode === "dark" ? "white" : "black" }}
+      >
         <h3>Your Text Summary</h3>
         <p>
           <b>
@@ -87,7 +103,7 @@ export default function TextBox(props) {
           <b> {0.008 * text.split(" ").length} Minutes read </b>
         </p>
         <h3>Preview</h3>
-        <p>{text}</p>
+        <p>{text.length>0?text:"Enter Something in the textbox above to preview it here"}</p>
       </div>
     </>
   );
