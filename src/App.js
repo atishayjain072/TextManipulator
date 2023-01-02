@@ -34,7 +34,7 @@ function App() {
         <div className="container my-3">
                 <TextBox
                   showAlert={showAlert}
-                  heading="Enter the Text to Analyse below"
+                  heading="Try TextManipulator- Word Counter, Character Counter, Remove extra spaces "
                   mode={mode}
                 />
         </div>
