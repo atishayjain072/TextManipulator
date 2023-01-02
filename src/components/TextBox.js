@@ -11,13 +11,30 @@ export default function TextBox(props) {
     setText(newText);
   };
   const handleClearClick = () => {
-    let newText = '';
+    let newText = "";
     setText(newText);
   };
   const handleSpeakClick = () => {
-    let msg= new SpeechSynthesisUtterance();
-    msg.text=text;
+    let msg = new SpeechSynthesisUtterance(text);
     window.speechSynthesis.speak(msg);
+    const toogle = document.getElementById("toggle");
+    if (toogle.textContent === "Speak") {
+      toogle.innerHTML = "Stop";
+    } else {
+      toogle.innerHTML = "Speak";
+      if (toogle.innerHTML === "Speak") {
+        window.speechSynthesis.cancel();
+      }
+    }
+  };
+  const handleCopyClick = () => {
+    var text = document.getElementById("myBox");
+    text.select();
+    navigator.clipboard.writeText(text.value);
+  };
+  const handleExtraSpaces = () => {
+    let newText = text.split(/[ ]+/);
+    setText(newText.join(" "))
   };
   const handleOnChange = (ev) => {
     setText(ev.target.value);
@@ -45,8 +62,18 @@ export default function TextBox(props) {
         <button className="btn btn-primary mx-1" onClick={handleClearClick}>
           Clear Text
         </button>
-        <button className="btn btn-primary mx-1" onClick={handleSpeakClick}>
+        <button
+          className="btn btn-primary mx-1"
+          onClick={handleSpeakClick}
+          id="toggle"
+        >
           Speak
+        </button>
+        <button className="btn btn-primary mx-1" onClick={handleCopyClick}>
+          Copy Text
+        </button>
+        <button className="btn btn-primary mx-1" onClick={handleExtraSpaces}>
+          Remove Extra Spaces
         </button>
       </div>
       <div className="container my-2">

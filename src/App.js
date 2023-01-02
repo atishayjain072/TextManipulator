@@ -1,6 +1,8 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 import TextBox from "./components/TextBox";
+import About from "./components/About";
+
 function App() {
   return (
     <>
@@ -8,6 +10,7 @@ function App() {
       <div className="container my-3">
         <TextBox heading="Enter the Text to Analyse below" />
       </div>
+      <About />
     </>
   );
 }
